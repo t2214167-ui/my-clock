@@ -1,0 +1,69 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #111;
+}
+
+.clock {
+  font-family: monospace;
+  font-size: 80px;
+  color: white;
+  letter-spacing: 4px;
+}
+    </style>
+</head>
+<body>
+    <div class="clock">
+  <span id="hours"></span>
+  <span>:</span>
+  <span id="minutes"></span>
+  <span>:</span>
+  <span id="seconds"></span>
+</div>
+<script>
+    const now = new Date();
+
+const hours   = now.getHours();   // 0–23
+const minutes = now.getMinutes(); // 0–59
+const seconds = now.getSeconds(); // 0–59
+// Converts 9 → "09", leaves 12 as "12"
+function pad(num) {
+  return String(num).padStart(2, '0');
+}
+
+// Use it like this:
+pad(9)   // → "09"
+pad(42)  // → "42"
+function updateClock() {
+  const now     = new Date();
+  const hours   = now.getHours();
+  const minutes = now.getMinutes();
+  const seconds = now.getSeconds();
+
+  document.getElementById('hours').textContent   = pad(hours);
+  document.getElementById('minutes').textContent = pad(minutes);
+  document.getElementById('seconds').textContent = pad(seconds);
+}
+// Run once right away
+updateClock();
+
+// Then repeat every second
+setInterval(updateClock, 1000);
+const rawHours = now.getHours();
+const ampm    = rawHours >= 12 ? 'PM' : 'AM';
+const hours12 = rawHours % 12 || 12;
+// % 12 gives 0 for midnight → || 12 fixes it
+
+document.getElementById('ampm').textContent = ampm;
+</script>
+    
+</body>
+</html>
